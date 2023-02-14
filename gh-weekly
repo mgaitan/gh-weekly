@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+set -e
+gh pr list --author "@me" -s all --json number,title,url,state \
+	--search "updated:>=$(date --date="7 days ago" '+%Y-%m-%d')" \
+	--template '{{range .}}- [#{{.number}}]({{.url}}) {{.title}} ({{.state}}){{"\n"}}{{end}}'
