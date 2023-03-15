@@ -5,7 +5,7 @@
 ## Installation
 
 ```
-gh extension install mislav/gh-branch
+gh extension install mgaitan/gh-weekly
 ```
 
 Then run
