@@ -23,7 +23,7 @@ gh weekly [--author <author>] [--since <since>] [--org <org>]
 By default the `--author` is `"@me"` (i.e you!), `--since` is `"7 days ago"` 
 and `--org` is the owner of the repo you are currently running the command.
 
-So, for example, what has our buddy [@pablogsal](https://github.com/pablogsal) 
+So, for example, what has our fellow pythonist [@pablogsal](https://github.com/pablogsal) 
 been doing in the Python repos during the last 3 days?
 
 ```
