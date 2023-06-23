@@ -1,5 +1,42 @@
 #!/usr/bin/env bash
 set -e
-gh pr list --author "@me" -s all --json number,title,url,state \
-	--search "updated:>=$(date --date="7 days ago" '+%Y-%m-%d')" \
-	--template '{{range .}}- [#{{.number}}]({{.url}}) {{.title}} ({{.state}}){{"\n"}}{{end}}'
+# Default values
+author="@me"
+since="7 days ago"
+org=""
+
+while [ $# -gt 0 ]; do
+  case "$1" in
+  --verbose)
+    verbose=1
+    ;;
+  --org)
+    org="$2"
+    shift
+    ;;
+  --since)
+    since="$2"
+    shift
+    ;;
+  --author)
+    author="$2"
+    shift
+    ;;
+  -h|--help)
+    echo "gh weekly [--author <author>] [--since <since>] [--org <org>]"
+
+    exit 0
+    ;;
+  esac
+  shift
+done
+
+if [ -z "$org" ]
+then
+  # default org to the current repo's org
+  org=$(gh repo view --json nameWithOwner --jq  '.nameWithOwner | split("/") | .[0]')
+fi
+
+gh pr list -s all --json number,title,url,state \
+    --search "user:${org} author:${author} updated:>=$(date --date="${since}" '+%Y-%m-%d')" \
+    --template '{{range .}}- [#{{.number}}]({{.url}}) {{.title}} ({{.state}}){{"\n"}}{{end}}'
